@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Music Player</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <nav class="navbar bg-body-secondary">
+      <div class="container">
+        <a class="nav-link fetch-local" href="#">Offline</a>
+        <a class="navbar-brand" href="#">Music Player</a>
+        <a class="nav-link fetch-api" href="#">Online</a>
+      </div>
+    </nav>
+
+    <div
+      class="main-container container d-flex flex-column align-items-center my-3"
+    >
+      <div class="music-box d-flex justify-content-center w-75" style="min-height: 20vw; background-size: cover"></div>
+
+    <div class="music-body d-none w-100">
+      <div class="songs-info d-flex justify-content-center"></div>
+      <div class="timer">
+      <div class="audio-time d-flex justify-content-between">
+        <div class="current-time">00:00</div>
+        <div class="audio-duration">00:00</div>
+      </div>
+      <div
+        class="progress"
+        role="progressbar"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        style="height: 5px"
+      >
+        <div class="progress-bar"  ></div>
+      </div>
+      </div>
+      <div class="buttons d-flex justify-content-center align-items-center my-2">
+      <button class="prev btn btn-dark text-light" style="border-radius: 50%">
+      <i class="fa-solid fa-backward-step"></i>
+      </button>
+      <button class="play btn btn-dark fs-4 text-light px-3 py-2 mx-2" style="border-radius: 50%">
+      <i class="fa-solid fa-play"></i>
+      </button>
+      <button class="next btn btn-dark text-light" style="border-radius: 50%">
+      <i class="fa-solid fa-forward-step"></i>
+      </button>
+    </div>
+    </div>
+      <div class="song-list list-group container mb-3"></div>
+  </div>
+
+    <script type="module" src="script.js"></script>
+  </body>
+</html>
