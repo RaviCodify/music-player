@@ -12,12 +12,7 @@ export function playSong(index = null) {
     // If an index is passed, set the current song to the specified index
     if (index !== null) {
       musicState.songCount = index;
-  
-      if (musicState.isFromApi) {
-        musicState.audio.src = musicState.songs[musicState.songCount].attributes.previews[0].url;
-      } else {
-        musicState.audio.src = `assets/songs/${musicState.songs[musicState.songCount].file}`;
-      }
+      musicState.audio.src = `assets/songs/${musicState.songs[musicState.songCount].file}`;
     }
   
     if (!musicState.audio) return;
@@ -40,7 +35,7 @@ export function playSong(index = null) {
       ? 'url("assets/images/play.gif")'
       : 'url("assets/images/pause.jpg")';
     songsInfo.innerHTML = `Title: ${
-      musicState.isFromApi ? musicState.songs[musicState.songCount].attributes.name : musicState.songs[musicState.songCount].title
+      musicState.songs[musicState.songCount].title
     }`;
     play.innerHTML = isPaused
       ? '<i class="fa-solid fa-pause"></i>'
