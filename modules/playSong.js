@@ -12,7 +12,11 @@ export function playSong(index = null) {
     // If an index is passed, set the current song to the specified index
     if (index !== null) {
       musicState.songCount = index;
-      musicState.audio.src = `assets/songs/${musicState.songs[musicState.songCount].file}`;
+      if (musicState.songs[musicState.songCount].type === "local") {
+        musicState.audio.src = musicState.songs[musicState.songCount].file;
+      } else {
+        musicState.audio.src = `assets/songs/${musicState.songs[musicState.songCount].file}`;
+      }
     }
   
     if (!musicState.audio) return;

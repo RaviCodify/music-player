@@ -1,4 +1,6 @@
 const musicBody = document.querySelector(".music-body");
+const musicUpload = document.getElementById("musicUpload");
+const uploadButton = document.getElementById("uploadButton");
 const play = document.querySelector(".play");
 const next = document.querySelector(".next");
 const prev = document.querySelector(".prev");
@@ -8,12 +10,40 @@ import { displaySongList } from "./modules/displaySongList.js";
 import { reset } from "./modules/other.js";
 import { playSong } from "./modules/playSong.js";
 
-
 export const musicState = {
   songs: [],
   songCount: 0,
   audio: null,
 };
+
+uploadButton.addEventListener("click", () => {
+  const files = musicUpload.files;
+  console.log(files);
+  const formData = new FormData();
+  formData.append("musicUpload", files[0]);
+
+  fetch("/upload", {
+    method: "POST",
+    body: formData,
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.message === "File uploaded successfully") {
+        const newSong = {
+          title: files[0].name,
+          file: data.file,
+          type: "local",
+        };
+        musicState.songs.push(newSong);
+        displaySongList();
+      } else {
+        alert(data.message);
+      }
+    })
+    .catch((error) => {
+      console.error("Error uploading the file:", error);
+    });
+});
 
 // Fetch song list from server
 const fetchLocalSong = () => {
@@ -28,7 +58,9 @@ const fetchLocalSong = () => {
     })
     .then((data) => {
       musicState.songs = data;
-      musicState.audio = new Audio(`assets/songs/${musicState.songs[musicState.songCount].file}`);
+      musicState.audio = new Audio(
+        `assets/songs/${musicState.songs[musicState.songCount].file}`
+      );
       musicState.isFromApi = false; // mark as local songs
       displaySongList();
     })
@@ -36,7 +68,7 @@ const fetchLocalSong = () => {
       console.error("Error fetching songs:", error);
     });
 };
-fetchLocalSong()
+fetchLocalSong();
 
 document.body.onkeyup = function (e) {
   if (e.key === " " || e.code === "Space") {
@@ -54,10 +86,7 @@ document.body.onkeydown = function (e) {
 
 // Click Event listeners
 [
-  // [document.querySelector(".fetch-local"), fetchLocalSong],
   [play, () => playSong()],
   [next, () => changeSong(1)],
   [prev, () => changeSong(-1)],
 ].forEach(([element, callback]) => element.addEventListener("click", callback));
-
-
