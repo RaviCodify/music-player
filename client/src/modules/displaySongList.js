@@ -12,7 +12,7 @@ export function displaySongList() {
       songElement.id = index;
       songElement.innerHTML = `
         <span>${index + 1}. </span>
-        <span>${musicState.isFromApi ? song.attributes.name : song.title}</span>  
+        <span>${song.title}</span>  
       `;
   
       songListContainer.appendChild(songElement);

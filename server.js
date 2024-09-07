@@ -1,28 +1,20 @@
 const express = require('express');
-const fs = require('fs');
-const path = require('path');
-
+const mongoose = require('mongoose')
 const app = express();
 const PORT = 3000;
-const songsDir = path.join(__dirname, 'assets/songs');
 
-// Serve static files
-app.use(express.static(__dirname));
 
+
+mongoose.connect("mongodb+srv://anand261950:EBjzzo04swBVTmXe@music-player.jvg4h.mongodb.net/music-player");  
+  const db = mongoose.connection;
+  db.on('error', console.error.bind(console, 'connection error:'));
+  db.once('open', () => {
+    console.log('Connected to MongoDB');
+  });
+  
 
 // Endpoint to get songs list
-app.get('/songs', (req, res) => {
-  fs.readdir(songsDir, (err, files) => {
-    if (err) {
-      return res.status(500).send('Unable to scan directory: ' + err);
-    }
-    const songs = files.filter(file => file.endsWith('.mp3')).map(file => ({
-      title: path.parse(file).name,
-      file: file
-    }));
-    res.json(songs);
-  });
-});
+app.get('/songs', require("./routes/song"));
 
 
 // Start the server
